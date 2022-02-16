@@ -12,6 +12,7 @@ public class LoadScene : MonoBehaviour
     public float transitionSpeed = 1f;
     private float transitionProgress = 0f;
     private bool transitionStarted = false;
+    BGMManager backgroundMusic;
 
     void Start()
     {
@@ -27,7 +28,8 @@ public class LoadScene : MonoBehaviour
     public void LoadNewScene()
     {
         asyncOperation.allowSceneActivation = true;
-        //StartCoroutine(LongComputation());
+        
+
     }
     IEnumerator LongComputation()
     {

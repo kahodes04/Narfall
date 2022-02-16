@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
-
 public class PlayerMovement : MonoBehaviour
 {
+    
     float movementX;
     float movementSpeed = 30f;
     Rigidbody2D rb;
@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     bool notTryAgain = true;
     AudioSource audioSource;
     AudioClip audioClip;
+    BGMManager backgroundMusic;
+    
     void Awake()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
@@ -32,6 +34,12 @@ public class PlayerMovement : MonoBehaviour
         sr = transform.GetComponent<SpriteRenderer>();
         cloudSpawner = GameObject.Find("Cloud Spawner").GetComponent<SpawnCloud>();
         playerCollider = GameObject.Find("Player").GetComponent<PolygonCollider2D>();
+        if (GameObject.Find("Background Music") != null)
+        {
+            backgroundMusic = GameObject.Find("Background Music").GetComponent<BGMManager>();
+            StartCoroutine(backgroundMusic.FadeDown(2f, 0.3f));
+        }
+
     }
     void Update()
     {
@@ -56,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
         
         if(playerHealth == 0 && notTryAgain)
         {
+            StartCoroutine(backgroundMusic.FadeDown(2f, 0.15f));
             audioSource.PlayOneShot(audioClip);
             notTryAgain = false;
             cloudSpawner.SetIsAlive(false);
